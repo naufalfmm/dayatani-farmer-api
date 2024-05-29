@@ -104,7 +104,7 @@ func WithDatabaseName(dbname string) PostgresConfig {
 	}
 }
 
-func WithSSLMode(sslMode bool) PostgresConfig {
+func WithSSLMode(sslMode string) PostgresConfig {
 	return func(c *postgresConfig) {
 		c.sslMode = sslMode
 
