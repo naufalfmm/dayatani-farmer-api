@@ -16,7 +16,7 @@ type postgresConfig struct {
 	password string
 	dbname   string
 
-	sslMode                   bool
+	sslMode                   string
 	statementTimeout          time.Duration
 	transactionSessionTimeout time.Duration
 	sessionTimeout            time.Duration
