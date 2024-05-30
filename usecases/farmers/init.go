@@ -1,9 +1,16 @@
 package farmers
 
-import "github.com/naufalfmm/dayatani-farmer-api/persistents"
+import (
+	"context"
+
+	"github.com/naufalfmm/dayatani-farmer-api/models/dao"
+	"github.com/naufalfmm/dayatani-farmer-api/persistents"
+)
 
 type (
-	Usecases interface{}
+	Usecases interface {
+		GetByID(ctx context.Context, id uint64) (dao.Farmer, error)
+	}
 
 	usecases struct {
 		persists persistents.Persistents
