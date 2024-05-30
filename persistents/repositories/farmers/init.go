@@ -1,12 +1,16 @@
 package farmers
 
 import (
+	"context"
+
+	"github.com/naufalfmm/dayatani-farmer-api/models/dao"
 	"github.com/naufalfmm/dayatani-farmer-api/resources/db"
 	"github.com/naufalfmm/dayatani-farmer-api/utils/logger"
 )
 
 type (
 	Repositories interface {
+		GetByID(ctx context.Context, id uint64) (dao.Farmer, error)
 	}
 
 	repositories struct {
