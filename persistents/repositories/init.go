@@ -2,16 +2,16 @@ package repositories
 
 import (
 	"github.com/naufalfmm/dayatani-farmer-api/persistents/repositories/farmers"
+	"github.com/naufalfmm/dayatani-farmer-api/resources/db"
 	"github.com/naufalfmm/dayatani-farmer-api/utils/logger"
-	"github.com/naufalfmm/dayatani-farmer-api/utils/orm"
 )
 
 type Repositories struct {
 	Farmers farmers.Repositories
 }
 
-func Init(o orm.Orm, l logger.Logger) (Repositories, error) {
-	f, err := farmers.Init(o, l)
+func Init(d *db.DB, l logger.Logger) (Repositories, error) {
+	f, err := farmers.Init(d, l)
 	if err != nil {
 		return Repositories{}, err
 	}

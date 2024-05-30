@@ -1,8 +1,8 @@
 package farmers
 
 import (
+	"github.com/naufalfmm/dayatani-farmer-api/resources/db"
 	"github.com/naufalfmm/dayatani-farmer-api/utils/logger"
-	"github.com/naufalfmm/dayatani-farmer-api/utils/orm"
 )
 
 type (
@@ -10,14 +10,14 @@ type (
 	}
 
 	repositories struct {
-		orm orm.Orm
+		db  *db.DB
 		log logger.Logger
 	}
 )
 
-func Init(o orm.Orm, l logger.Logger) (Repositories, error) {
+func Init(d *db.DB, l logger.Logger) (Repositories, error) {
 	return &repositories{
-		orm: o,
+		db:  d,
 		log: l,
 	}, nil
 }
