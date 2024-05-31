@@ -1,6 +1,7 @@
 package dto
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -37,14 +38,14 @@ func (req *FarmerListPaginationRequest) FromGinContext(gc *gin.Context) error {
 	return nil
 }
 
-type UpsertFarmerRequest struct {
+type CreateFarmerRequest struct {
 	Name          string `json:"name" validate:"required"`
 	BirthDateBody string `json:"birth_date" validate:"required,datetime=2006-01-02"`
 
 	BirthDate time.Time `json:"-"`
 }
 
-func (req *UpsertFarmerRequest) FromGinContext(gc *gin.Context) error {
+func (req *CreateFarmerRequest) FromGinContext(gc *gin.Context) error {
 	if err := gc.ShouldBindJSON(req); err != nil {
 		return helper.HandleBindError(*req, err)
 	}
@@ -59,13 +60,33 @@ func (req *UpsertFarmerRequest) FromGinContext(gc *gin.Context) error {
 	return nil
 }
 
-func (req UpsertFarmerRequest) ToFarmer() dao.Farmer {
+func (req CreateFarmerRequest) ToFarmer() dao.Farmer {
 	return dao.Farmer{
 		Name:      req.Name,
 		BirthDate: req.BirthDate,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
+}
+
+type UpdateFarmerRequest struct {
+	ID uint64 `json:"-"`
+	CreateFarmerRequest
+}
+
+func (req *UpdateFarmerRequest) FromGinContext(gc *gin.Context) error {
+	id, err := strconv.ParseUint(gc.Param("id"), 10, 64)
+	if err != nil {
+		return err
+	}
+
+	if err := req.CreateFarmerRequest.FromGinContext(gc); err != nil {
+		return err
+	}
+
+	req.ID = id
+
+	return nil
 }
 
 type FarmerPaginationResponse struct {

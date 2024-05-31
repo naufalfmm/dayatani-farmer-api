@@ -31,4 +31,5 @@ func (r Routes) Register(ge *gin.Engine) {
 	fr.GET("/:id", r.Controllers.Farmers.GetByID)
 	fr.GET("", r.Controllers.Farmers.GetPaginated)
 	fr.POST("", r.Controllers.Farmers.Create)
+	fr.PUT("/:id", r.Controllers.Farmers.Update)
 }
