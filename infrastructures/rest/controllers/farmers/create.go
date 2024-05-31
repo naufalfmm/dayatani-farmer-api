@@ -19,7 +19,7 @@ func (c Controllers) Create(gc *gin.Context) {
 		return
 	}
 
-	_, err := c.Usecases.Farmers.Create(gc.Request.Context(), req.ToFarmer())
+	_, err := c.Usecases.Farmers.Create(gc.Request.Context(), req)
 	if err != nil {
 		gc.JSON(http.StatusInternalServerError, dto.Default{
 			Ok:      false,
