@@ -31,6 +31,10 @@ type EnvConfig struct {
 	DbWaitSleep time.Duration `envconfig:"DB_WAIT_SLEEP" default:"1s"`
 
 	LogMode bool `envconfig:"LOG_MODE" default:"false"`
+
+	HashedCost         int    `envconfig:"HASHED_COST" default:"5" required:"true"`
+	HashedAuthUsername string `envconfig:"HASHED_AUTH_USERNAME" required:"true"`
+	HashedAuthPassword string `envconfig:"HASHED_AUTH_PASSWORD" required:"true"`
 }
 
 func NewConfig() (*EnvConfig, error) {
