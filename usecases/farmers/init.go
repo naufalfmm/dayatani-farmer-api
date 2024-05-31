@@ -14,6 +14,7 @@ type (
 		GetPaginated(ctx context.Context, req dto.FarmerListPaginationRequest) (dao.FarmerPaging, error)
 		Create(ctx context.Context, req dto.CreateFarmerRequest) (dao.Farmer, error)
 		Update(ctx context.Context, req dto.UpdateFarmerRequest) error
+		DeleteByID(ctx context.Context, id uint64) error
 	}
 
 	usecases struct {

@@ -15,6 +15,7 @@ type (
 		GetPaginated(ctx context.Context, req dto.FarmerListPaginationRequest) (dao.FarmerPaging, error)
 		Create(ctx context.Context, farmer dao.Farmer) (dao.Farmer, error)
 		UpdateByID(ctx context.Context, id uint64, updatedFarmer dao.Farmer) error
+		DeleteByID(ctx context.Context, id uint64) error
 	}
 
 	repositories struct {
