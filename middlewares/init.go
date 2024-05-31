@@ -10,6 +10,8 @@ import (
 type (
 	Middlewares interface {
 		VerifyAuth() gin.HandlerFunc
+		PanicRecover() gin.HandlerFunc
+		ImplementCors() gin.HandlerFunc
 	}
 
 	middlewares struct {
