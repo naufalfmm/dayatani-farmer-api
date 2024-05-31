@@ -1,7 +1,12 @@
 package consts
 
 import (
+	"errors"
 	"fmt"
+)
+
+var (
+	ErrInvalidAuth = errors.New("invalid auth")
 )
 
 var (

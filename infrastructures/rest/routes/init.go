@@ -26,6 +26,7 @@ func Init(usc usecases.Usecases, midl middlewares.Middlewares) (Routes, error) {
 
 func (r Routes) Register(ge *gin.Engine) {
 	ge.RedirectFixedPath = true
+	ge.Use(r.Middlewares.VerifyAuth())
 
 	fr := ge.Group("/farmers")
 	fr.GET("/:id", r.Controllers.Farmers.GetByID)

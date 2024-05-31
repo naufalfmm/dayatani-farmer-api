@@ -1,13 +1,16 @@
 package middlewares
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/naufalfmm/dayatani-farmer-api/resources/config"
 	"github.com/naufalfmm/dayatani-farmer-api/utils/encoding"
 	"github.com/naufalfmm/dayatani-farmer-api/utils/hashing"
 )
 
 type (
-	Middlewares interface{}
+	Middlewares interface {
+		VerifyAuth() gin.HandlerFunc
+	}
 
 	middlewares struct {
 		h hashing.Hashing
