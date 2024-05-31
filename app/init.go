@@ -10,19 +10,25 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"github.com/naufalfmm/dayatani-farmer-api/infrastructures"
 	"github.com/naufalfmm/dayatani-farmer-api/middlewares"
 	"github.com/naufalfmm/dayatani-farmer-api/persistents"
 	"github.com/naufalfmm/dayatani-farmer-api/resources/config"
 	"github.com/naufalfmm/dayatani-farmer-api/resources/db"
 	"github.com/naufalfmm/dayatani-farmer-api/resources/log"
+	"github.com/naufalfmm/dayatani-farmer-api/resources/validator"
 	"github.com/naufalfmm/dayatani-farmer-api/usecases"
+
+	validatorUtils "github.com/naufalfmm/dayatani-farmer-api/utils/validator"
 )
 
 type App struct {
 	ge *gin.Engine
 
 	c *config.EnvConfig
+
+	validator validatorUtils.Validator
 }
 
 func Init() App {
@@ -53,6 +59,11 @@ func Init() App {
 		panic(err)
 	}
 
+	vlds, err := validator.NewValidator()
+	if err != nil {
+		panic(err)
+	}
+
 	middls, err := middlewares.Init()
 	if err != nil {
 		panic(err)
@@ -66,12 +77,15 @@ func Init() App {
 	infrs.Register(ge)
 
 	return App{
-		ge: ge,
-		c:  c,
+		ge:        ge,
+		c:         c,
+		validator: vlds,
 	}
 }
 
 func (app App) Run() {
+	binding.Validator = app.validator
+
 	httpServer := http.Server{
 		Addr:    fmt.Sprintf(":%d", app.c.Port),
 		Handler: app.ge,
