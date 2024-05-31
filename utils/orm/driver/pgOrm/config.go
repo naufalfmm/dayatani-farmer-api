@@ -56,7 +56,6 @@ func (c postgresConfig) Addr() string {
 func (c postgresConfig) toDriverOptions() []pgdriver.Option {
 	opts := []pgdriver.Option{
 		pgdriver.WithNetwork("tcp"),
-		pgdriver.WithInsecure(true),
 	}
 
 	if c.host != "" && c.port != "" {
@@ -77,6 +76,10 @@ func (c postgresConfig) toDriverOptions() []pgdriver.Option {
 
 	if len(c.connParams) > 0 {
 		opts = append(opts, pgdriver.WithConnParams(c.connParams))
+	}
+
+	if c.sslMode == "" {
+		opts = append(opts, pgdriver.WithInsecure(true))
 	}
 
 	return opts
@@ -108,6 +111,10 @@ func WithSSLMode(sslMode string) PostgresConfig {
 	return func(c *postgresConfig) {
 		c.sslMode = sslMode
 
+		if c.sslMode == "" {
+			return
+		}
+
 		if c.connParams == nil {
 			c.connParams = map[string]interface{}{}
 		}
@@ -126,20 +133,20 @@ func WithTimeout(timeout time.Duration) PostgresConfig {
 			c.connParams = map[string]interface{}{}
 		}
 
-		c.connParams["statement_timeout"] = timeout.String()
-		c.connParams["idle_in_transaction_session_timeout"] = timeout.String()
-		c.connParams["idle_session_timeout"] = timeout.String()
+		c.connParams["statement_timeout"] = timeout.Milliseconds()
+		c.connParams["idle_in_transaction_session_timeout"] = timeout.Milliseconds()
+		c.connParams["idle_session_timeout"] = timeout.Milliseconds()
 	}
 }
 
 func WithStatementTimeout(timeout time.Duration) PostgresConfig {
 	return func(c *postgresConfig) {
-		c.sessionTimeout = timeout
+		c.statementTimeout = timeout
 
 		if c.connParams == nil {
 			c.connParams = map[string]interface{}{}
 		}
-		c.connParams["statement_timeout"] = timeout.String()
+		c.connParams["statement_timeout"] = timeout.Milliseconds()
 	}
 }
 
@@ -150,7 +157,7 @@ func WithTransactionSessionTimeout(timeout time.Duration) PostgresConfig {
 		if c.connParams == nil {
 			c.connParams = map[string]interface{}{}
 		}
-		c.connParams["idle_in_transaction_session_timeout"] = timeout.String()
+		c.connParams["idle_in_transaction_session_timeout"] = timeout.Milliseconds()
 	}
 }
 
@@ -161,7 +168,7 @@ func WithSessionTimeout(timeout time.Duration) PostgresConfig {
 		if c.connParams == nil {
 			c.connParams = map[string]interface{}{}
 		}
-		c.connParams["idle_session_timeout"] = timeout.String()
+		c.connParams["idle_session_timeout"] = timeout.Milliseconds()
 	}
 }
 

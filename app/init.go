@@ -10,7 +10,13 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/naufalfmm/dayatani-farmer-api/infrastructures"
+	"github.com/naufalfmm/dayatani-farmer-api/middlewares"
+	"github.com/naufalfmm/dayatani-farmer-api/persistents"
 	"github.com/naufalfmm/dayatani-farmer-api/resources/config"
+	"github.com/naufalfmm/dayatani-farmer-api/resources/db"
+	"github.com/naufalfmm/dayatani-farmer-api/resources/log"
+	"github.com/naufalfmm/dayatani-farmer-api/usecases"
 )
 
 type App struct {
@@ -27,6 +33,38 @@ func Init() App {
 		panic(err)
 	}
 
+	l, err := log.NewLogger(c)
+	if err != nil {
+		panic(err)
+	}
+
+	d, err := db.NewPostgres(c, l)
+	if err != nil {
+		panic(err)
+	}
+
+	prst, err := persistents.Init(d, l)
+	if err != nil {
+		panic(err)
+	}
+
+	uscs, err := usecases.Init(prst)
+	if err != nil {
+		panic(err)
+	}
+
+	middls, err := middlewares.Init()
+	if err != nil {
+		panic(err)
+	}
+
+	infrs, err := infrastructures.Init(uscs, middls)
+	if err != nil {
+		panic(err)
+	}
+
+	infrs.Register(ge)
+
 	return App{
 		ge: ge,
 		c:  c,
@@ -38,6 +76,8 @@ func (app App) Run() {
 		Addr:    fmt.Sprintf(":%d", app.c.Port),
 		Handler: app.ge,
 	}
+
+	go httpServer.ListenAndServe()
 
 	sc := make(chan os.Signal, 1)
 	signal.Notify(
