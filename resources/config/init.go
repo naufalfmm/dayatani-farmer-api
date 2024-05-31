@@ -35,6 +35,8 @@ type EnvConfig struct {
 	HashedCost         int    `envconfig:"HASHED_COST" default:"5" required:"true"`
 	HashedAuthUsername string `envconfig:"HASHED_AUTH_USERNAME" required:"true"`
 	HashedAuthPassword string `envconfig:"HASHED_AUTH_PASSWORD" required:"true"`
+
+	Base64EncodingType string `envconfig:"BASE64_ENCODING_TYPE" default:"std" required:"true"`
 }
 
 func NewConfig() (*EnvConfig, error) {

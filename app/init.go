@@ -20,6 +20,8 @@ import (
 	"github.com/naufalfmm/dayatani-farmer-api/resources/validator"
 	"github.com/naufalfmm/dayatani-farmer-api/usecases"
 
+	"github.com/naufalfmm/dayatani-farmer-api/utils/encoding/base64Encoding"
+	"github.com/naufalfmm/dayatani-farmer-api/utils/hashing/bcryptHash"
 	validatorUtils "github.com/naufalfmm/dayatani-farmer-api/utils/validator"
 )
 
@@ -59,12 +61,22 @@ func Init() App {
 		panic(err)
 	}
 
+	bcrHash, err := bcryptHash.NewBcrypt(bcryptHash.WithCost(c.HashedCost))
+	if err != nil {
+		panic(err)
+	}
+
+	base64Enc, err := base64Encoding.NewBase64Encoding(base64Encoding.WithEncType(c.Base64EncodingType))
+	if err != nil {
+		panic(err)
+	}
+
 	vlds, err := validator.NewValidator()
 	if err != nil {
 		panic(err)
 	}
 
-	middls, err := middlewares.Init()
+	middls, err := middlewares.Init(bcrHash, base64Enc, c)
 	if err != nil {
 		panic(err)
 	}
