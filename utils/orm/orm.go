@@ -49,6 +49,7 @@ type (
 		Scan(ctx context.Context, dest ...interface{}) error
 		Exec(ctx context.Context, dest ...interface{}) (sql.Result, error)
 		Count(ctx context.Context) (int, error)
+		ScanAndCount(ctx context.Context, dest ...interface{}) (int, error)
 	}
 
 	Values interface {

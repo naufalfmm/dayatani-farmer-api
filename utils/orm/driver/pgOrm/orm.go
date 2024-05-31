@@ -414,6 +414,14 @@ func (so *selectPostgreOrm) Count(ctx context.Context) (int, error) {
 	return c, err
 }
 
+func (so *selectPostgreOrm) ScanAndCount(ctx context.Context, dest ...interface{}) (int, error) {
+	c, err := so.sq.ScanAndCount(ctx, dest...)
+
+	so.sq = nil
+
+	return c, err
+}
+
 type valuesPostgreOrm struct {
 	vq *bun.ValuesQuery
 }

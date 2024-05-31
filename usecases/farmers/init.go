@@ -4,12 +4,14 @@ import (
 	"context"
 
 	"github.com/naufalfmm/dayatani-farmer-api/models/dao"
+	"github.com/naufalfmm/dayatani-farmer-api/models/dto"
 	"github.com/naufalfmm/dayatani-farmer-api/persistents"
 )
 
 type (
 	Usecases interface {
 		GetByID(ctx context.Context, id uint64) (dao.Farmer, error)
+		GetPaginated(ctx context.Context, req dto.FarmerListPaginationRequest) (dao.FarmerPaging, error)
 	}
 
 	usecases struct {

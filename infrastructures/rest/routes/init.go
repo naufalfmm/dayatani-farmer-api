@@ -29,4 +29,5 @@ func (r Routes) Register(ge *gin.Engine) {
 
 	fr := ge.Group("/farmers")
 	fr.GET("/:id", r.Controllers.Farmers.GetByID)
+	fr.GET("", r.Controllers.Farmers.GetPaginated)
 }

@@ -3,9 +3,10 @@ package consts
 const (
 	LayoutISOTime = "2006-01-02"
 
-	DefPage   = 10
-	DefOffset = 1
+	DefOffset = 0
 
 	DefLimit = 10
 	MaxLimit = 25
+
+	KeyReq = "req"
 )
