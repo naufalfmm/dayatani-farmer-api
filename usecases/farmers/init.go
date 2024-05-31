@@ -12,6 +12,7 @@ type (
 	Usecases interface {
 		GetByID(ctx context.Context, id uint64) (dao.Farmer, error)
 		GetPaginated(ctx context.Context, req dto.FarmerListPaginationRequest) (dao.FarmerPaging, error)
+		Create(ctx context.Context, farmer dao.Farmer) (dao.Farmer, error)
 	}
 
 	usecases struct {

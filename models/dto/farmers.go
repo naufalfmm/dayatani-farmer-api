@@ -1,9 +1,12 @@
 package dto
 
 import (
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/naufalfmm/dayatani-farmer-api/consts"
 	"github.com/naufalfmm/dayatani-farmer-api/models/dao"
+	"github.com/naufalfmm/dayatani-farmer-api/utils/helper"
 )
 
 type FarmerResponse struct {
@@ -32,6 +35,37 @@ func (req *FarmerListPaginationRequest) FromGinContext(gc *gin.Context) error {
 	}
 
 	return nil
+}
+
+type CreateFarmerRequest struct {
+	Name          string `json:"name" validate:"required"`
+	BirthDateBody string `json:"birth_date" validate:"required,datetime=2006-01-02"`
+
+	BirthDate time.Time `json:"-"`
+}
+
+func (req *CreateFarmerRequest) FromGinContext(gc *gin.Context) error {
+	if err := gc.ShouldBindJSON(req); err != nil {
+		return helper.HandleBindError(*req, err)
+	}
+
+	fmtd, err := time.Parse(consts.LayoutISOTime, req.BirthDateBody)
+	if err != nil {
+		return err
+	}
+
+	req.BirthDate = fmtd
+
+	return nil
+}
+
+func (req CreateFarmerRequest) ToFarmer() dao.Farmer {
+	return dao.Farmer{
+		Name:      req.Name,
+		BirthDate: req.BirthDate,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
 }
 
 type FarmerPaginationResponse struct {
