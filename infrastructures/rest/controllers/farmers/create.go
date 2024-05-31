@@ -8,7 +8,7 @@ import (
 )
 
 func (c Controllers) Create(gc *gin.Context) {
-	var req dto.CreateFarmerRequest
+	var req dto.UpsertFarmerRequest
 	if err := req.FromGinContext(gc); err != nil {
 		gc.JSON(http.StatusBadRequest, dto.Default{
 			Ok:      false,

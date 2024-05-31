@@ -37,14 +37,14 @@ func (req *FarmerListPaginationRequest) FromGinContext(gc *gin.Context) error {
 	return nil
 }
 
-type CreateFarmerRequest struct {
+type UpsertFarmerRequest struct {
 	Name          string `json:"name" validate:"required"`
 	BirthDateBody string `json:"birth_date" validate:"required,datetime=2006-01-02"`
 
 	BirthDate time.Time `json:"-"`
 }
 
-func (req *CreateFarmerRequest) FromGinContext(gc *gin.Context) error {
+func (req *UpsertFarmerRequest) FromGinContext(gc *gin.Context) error {
 	if err := gc.ShouldBindJSON(req); err != nil {
 		return helper.HandleBindError(*req, err)
 	}
@@ -59,7 +59,7 @@ func (req *CreateFarmerRequest) FromGinContext(gc *gin.Context) error {
 	return nil
 }
 
-func (req CreateFarmerRequest) ToFarmer() dao.Farmer {
+func (req UpsertFarmerRequest) ToFarmer() dao.Farmer {
 	return dao.Farmer{
 		Name:      req.Name,
 		BirthDate: req.BirthDate,
