@@ -11,5 +11,5 @@ func (u usecases) Update(ctx context.Context, req dto.UpdateFarmerRequest) error
 		return err
 	}
 
-	return u.persists.Repositories.Farmers.UpdateByID(ctx, req.ID, req.ToFarmer())
+	return u.persists.Repositories.Farmers.UpdateByID(ctx, req.ID, req.ToFarmer(ctx))
 }

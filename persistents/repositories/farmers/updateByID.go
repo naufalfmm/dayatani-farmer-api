@@ -2,9 +2,9 @@ package farmers
 
 import (
 	"context"
-	"time"
 
 	"github.com/naufalfmm/dayatani-farmer-api/models/dao"
+	"github.com/naufalfmm/dayatani-farmer-api/utils/frozenTime"
 )
 
 func (r repositories) UpdateByID(ctx context.Context, id uint64, updatedFarmer dao.Farmer) error {
@@ -20,7 +20,7 @@ func (r repositories) UpdateByID(ctx context.Context, id uint64, updatedFarmer d
 		updOrm = updOrm.Set("birth_date = ?", updatedFarmer.BirthDate)
 	}
 
-	updatedAt := time.Now()
+	updatedAt := frozenTime.Now(ctx)
 	if !updatedFarmer.UpdatedAt.IsZero() {
 		updatedAt = updatedFarmer.UpdatedAt
 	}

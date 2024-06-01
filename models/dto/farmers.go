@@ -1,12 +1,14 @@
 package dto
 
 import (
+	"context"
 	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/naufalfmm/dayatani-farmer-api/consts"
 	"github.com/naufalfmm/dayatani-farmer-api/models/dao"
+	"github.com/naufalfmm/dayatani-farmer-api/utils/frozenTime"
 	"github.com/naufalfmm/dayatani-farmer-api/utils/helper"
 )
 
@@ -60,12 +62,12 @@ func (req *CreateFarmerRequest) FromGinContext(gc *gin.Context) error {
 	return nil
 }
 
-func (req CreateFarmerRequest) ToFarmer() dao.Farmer {
+func (req CreateFarmerRequest) ToFarmer(ctx context.Context) dao.Farmer {
 	return dao.Farmer{
 		Name:      req.Name,
 		BirthDate: req.BirthDate,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		CreatedAt: frozenTime.Now(ctx),
+		UpdatedAt: frozenTime.Now(ctx),
 	}
 }
 

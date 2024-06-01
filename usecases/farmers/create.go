@@ -8,5 +8,5 @@ import (
 )
 
 func (u usecases) Create(ctx context.Context, req dto.CreateFarmerRequest) (dao.Farmer, error) {
-	return u.persists.Repositories.Farmers.Create(ctx, req.ToFarmer())
+	return u.persists.Repositories.Farmers.Create(ctx, req.ToFarmer(ctx))
 }
