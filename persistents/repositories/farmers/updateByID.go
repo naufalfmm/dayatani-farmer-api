@@ -29,7 +29,7 @@ func (r repositories) UpdateByID(ctx context.Context, id uint64, updatedFarmer d
 		Set("updated_at = ?", updatedAt).
 		Where("id = ?", id).
 		Exec(ctx); err != nil {
-		r.log.Error(ctx, "update-farmer-by-id").Err(err).Uint64("id", id).Send()
+		r.log.Error(ctx, LogMsgUpdateFarmerByID).Err(err).Uint64(LogKeyID, id).Send()
 		return err
 	}
 

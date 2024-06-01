@@ -14,6 +14,7 @@ const (
 	LogMsgGetFarmerByID       = "get-farmer-by-id"
 	LogMsgDeleteFarmerByID    = "delete-farmer-by-id"
 	LogMsgGetPaginatedFarmers = "get-paginated-farmers"
+	LogMsgUpdateFarmerByID    = "update-farmer-by-id"
 
 	LogKeyFarmer = "farmer"
 	LogKeyID     = "id"
