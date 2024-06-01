@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS farmers (
+    id BIGSERIAL NOT NULL,
+    name TEXT NOT NULL,
+    birth_date DATE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    
+    PRIMARY KEY(id)
+);
