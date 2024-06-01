@@ -9,6 +9,7 @@ import (
 	"github.com/naufalfmm/dayatani-farmer-api/utils/logger"
 )
 
+//go:generate mockgen -package=farmers -destination=../../../mocks/persistents/repositories/farmers/init.go -source=init.go
 type (
 	Repositories interface {
 		GetByID(ctx context.Context, id uint64) (dao.Farmer, error)

@@ -7,6 +7,7 @@ import (
 	"github.com/uptrace/bun/schema"
 )
 
+//go:generate mockgen -package=mockOrm -destination=./mockOrm/mock.go -source=orm.go
 type (
 	QueryAppender interface {
 		AppendQuery(fmter schema.Formatter, b []byte) ([]byte, error)

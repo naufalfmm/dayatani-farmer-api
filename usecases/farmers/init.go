@@ -8,6 +8,7 @@ import (
 	"github.com/naufalfmm/dayatani-farmer-api/persistents"
 )
 
+//go:generate mockgen -package=farmers -destination=../../mocks/usecases/farmers/init.go -source=init.go
 type (
 	Usecases interface {
 		GetByID(ctx context.Context, id uint64) (dao.Farmer, error)

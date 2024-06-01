@@ -7,6 +7,7 @@ import (
 	"github.com/naufalfmm/dayatani-farmer-api/utils/hashing"
 )
 
+//go:generate mockgen -package=middlewares -destination=../mocks/middlewares/init.go -source=init.go
 type (
 	Middlewares interface {
 		VerifyAuth() gin.HandlerFunc

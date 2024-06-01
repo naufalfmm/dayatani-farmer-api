@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+//go:generate mockgen -package=mockLogger -destination=./mockLogger/mock.go -source=logger.go
 type Logger interface {
 	Info(ctx context.Context, msg string) Logger
 	Debug(ctx context.Context, msg string) Logger
