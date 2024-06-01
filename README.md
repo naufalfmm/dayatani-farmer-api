@@ -262,7 +262,7 @@ If the authentication is invalid, the endpoint will return
 1. Authorization: `Basic <Base64>`
 
 #### Response
-##### 200 (No Data)
+##### 200 (No Content)
 
 ##### 400
 ```json
