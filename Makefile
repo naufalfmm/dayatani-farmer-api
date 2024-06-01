@@ -36,22 +36,22 @@ ifeq ($(DOCKER), true)
 endif
 
 db:
-	db_init && db_migrate
+	make db_init && make db_migrate
 
-app_init:
-ifeq ($(DOCKER), true)
-	docker build -t naufalfmm/dayatani-farmer-api:latest --build-arg TEST_RUNNING=$(TEST_RUNNING) --build-arg LINT_RUNNING=$(LINT_RUNNING) -f .\dockerfile\Dockerfile.app .
-endif
-
-app_run:
+service_run:
 ifeq ($(DOCKER), true)
 	docker run --name dayatani-farmer-api -p $(PORT):$(PORT) --env-file $(ENVFILENAME) --rm naufalfmm/dayatani-farmer-api
 else
 	go run main.go
 endif
 
-app:
-	app_init && app_run
+service_init:
+ifeq ($(DOCKER), true)
+	docker build -t naufalfmm/dayatani-farmer-api:latest --build-arg TEST_RUNNING=$(TEST_RUNNING) --build-arg LINT_RUNNING=$(LINT_RUNNING) -f .\dockerfile\Dockerfile.app .
+endif
+
+service:
+	make service_init && make service_run
 
 run:
-	db && app
+	make db && make service

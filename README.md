@@ -55,7 +55,7 @@ Service of farmer
 
 3. Run the service by
    ```sh
-   make app DOCKER= PORT= ENVFILENAME= TEST_RUNNING= LINT_RUNNING=
+   make service DOCKER= PORT= ENVFILENAME= TEST_RUNNING= LINT_RUNNING=
 
    # Note:
    # DOCKER= // If the migration process use docker, please set as true.
@@ -65,7 +65,9 @@ Service of farmer
    # LINT_RUNNING= // The value is used if the DOCKER parameter is true. If the value true, the docker building check the linter. The default value is false.
    ```
    Note:
-   The command `make app` automatically create the docker image (`make app_init`) and run the migration (`make app_run`) if the `DOCKER` parameter is `true`
+   1. The command `make app` automatically create the docker image (`make app_init`) and run the migration (`make app_run`) if the `DOCKER` parameter is `true`.
+   2. If the `TEST_RUNNING` value is true and the testing is failed, the build process will be aborted.
+   3. If the `LINT_RUNNING` value is true and the linter checking process is failed, the build process will be aborted.
 
 ## API Docs
 
