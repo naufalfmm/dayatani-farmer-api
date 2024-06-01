@@ -1,0 +1,285 @@
+definitions:
+  dto.CreateFarmerRequest:
+    properties:
+      birth_date:
+        type: string
+      name:
+        type: string
+    required:
+    - birth_date
+    - name
+    type: object
+  dto.Default:
+    properties:
+      data: {}
+      message:
+        type: string
+      ok:
+        type: boolean
+    type: object
+  dto.ErrorData:
+    properties:
+      error:
+        type: string
+    type: object
+  dto.FarmerPaginationResponse:
+    properties:
+      count:
+        type: integer
+      items:
+        items:
+          $ref: '#/definitions/dto.FarmerResponse'
+        type: array
+      limit:
+        type: integer
+      offset:
+        type: integer
+      sorts:
+        items:
+          type: string
+        type: array
+    type: object
+  dto.FarmerResponse:
+    properties:
+      birth_date:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  dto.UpdateFarmerRequest:
+    properties:
+      birth_date:
+        type: string
+      name:
+        type: string
+    required:
+    - birth_date
+    - name
+    type: object
+info:
+  contact: {}
+  description: Prototype of farmer API
+  title: Dayatani Farmer API
+  version: "1.0"
+paths:
+  /farmers:
+    get:
+      consumes:
+      - application/json
+      description: Get paginated farmers
+      parameters:
+      - description: The number of returned farms
+        in: query
+        name: limit
+        type: integer
+      - description: The number of skip specified rows
+        in: query
+        name: offset
+        type: integer
+      - description: 'The sort separated by comma with '
+        in: query
+        name: sorts
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.FarmerPaginationResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ErrorData'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ErrorData'
+              type: object
+      security:
+      - BasicAuth: []
+      summary: Get paginated farmers
+      tags:
+      - Farmers
+    post:
+      consumes:
+      - application/json
+      description: Create farmer
+      parameters:
+      - description: Farmer create request body
+        in: body
+        name: farmer
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateFarmerRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ErrorData'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ErrorData'
+              type: object
+      security:
+      - BasicAuth: []
+      summary: Create farmer
+      tags:
+      - Farmers
+  /farmers/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete farmer detail by id
+      parameters:
+      - description: Farmer id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ErrorData'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ErrorData'
+              type: object
+      security:
+      - BasicAuth: []
+      summary: Delete farmer detail by id
+      tags:
+      - Farmers
+    get:
+      consumes:
+      - application/json
+      description: Get farmer detail by id
+      parameters:
+      - description: Farmer id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.FarmerResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ErrorData'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ErrorData'
+              type: object
+      security:
+      - BasicAuth: []
+      summary: Get farmer detail by id
+      tags:
+      - Farmers
+    put:
+      consumes:
+      - application/json
+      description: Update farmer by id
+      parameters:
+      - description: Farmer create request body
+        in: body
+        name: farmer
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UpdateFarmerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ErrorData'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.Default'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ErrorData'
+              type: object
+      security:
+      - BasicAuth: []
+      summary: Update farmer by id
+      tags:
+      - Farmers
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

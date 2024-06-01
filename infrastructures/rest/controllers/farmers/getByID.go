@@ -10,6 +10,21 @@ import (
 	"github.com/naufalfmm/dayatani-farmer-api/models/dto"
 )
 
+// Get Farmer by ID godoc
+//
+//	@Summary		Get farmer detail by id
+//	@Description	Get farmer detail by id
+//	@Security		BasicAuth
+//	@Tags			Farmers
+//	@Accept			json
+//	@Produce		json
+//
+//	@Param			id	path		uint64	true	"Farmer id"
+//
+//	@Success		200	{object}	dto.Default{data=dto.FarmerResponse}
+//	@Failure		400	{object}	dto.Default{data=dto.ErrorData}
+//	@Failure		500	{object}	dto.Default{data=dto.ErrorData}
+//	@Router			/farmers/{id} [get]
 func (c Controllers) GetByID(gc *gin.Context) {
 	id, err := strconv.ParseUint(gc.Param("id"), 10, 64)
 	if err != nil {
@@ -38,7 +53,7 @@ func (c Controllers) GetByID(gc *gin.Context) {
 }
 
 func (c Controllers) buildErrorGetByID(gc *gin.Context, err error) {
-	if err != sql.ErrNoRows {
+	if err == sql.ErrNoRows {
 		err = consts.ErrEntityNotFoundBuilder("farmer")
 		gc.JSON(http.StatusBadRequest, dto.Default{
 			Ok:      false,

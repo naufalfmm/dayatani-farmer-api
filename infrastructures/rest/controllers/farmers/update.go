@@ -9,13 +9,30 @@ import (
 	"github.com/naufalfmm/dayatani-farmer-api/models/dto"
 )
 
+// Update Farmer by ID godoc
+//
+//	@Summary		Update farmer by id
+//	@Description	Update farmer by id
+//	@Security		BasicAuth
+//	@Tags			Farmers
+//	@Accept			json
+//	@Produce		json
+//
+//	@Param			farmer	body	dto.UpdateFarmerRequest	true	"Farmer create request body"
+//
+//	@Success		200
+//	@Failure		400	{object}	dto.Default{data=dto.ErrorData}
+//	@Failure		500	{object}	dto.Default{data=dto.ErrorData}
+//	@Router			/farmers/{id} [put]
 func (c Controllers) Update(gc *gin.Context) {
 	var req dto.UpdateFarmerRequest
 	if err := req.FromGinContext(gc); err != nil {
 		gc.JSON(http.StatusBadRequest, dto.Default{
 			Ok:      false,
 			Message: err.Error(),
-			Data:    err,
+			Data: dto.ErrorData{
+				Error: err.Error(),
+			},
 		})
 
 		return
@@ -31,7 +48,7 @@ func (c Controllers) Update(gc *gin.Context) {
 }
 
 func (c Controllers) buildErrorUpdate(gc *gin.Context, err error) {
-	if err != sql.ErrNoRows {
+	if err == sql.ErrNoRows {
 		err = consts.ErrEntityNotFoundBuilder("farmer")
 		gc.JSON(http.StatusBadRequest, dto.Default{
 			Ok:      false,
