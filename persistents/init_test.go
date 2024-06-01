@@ -11,8 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_repositories_Init(t *testing.T) {
-	t.Run("If no error, it will return the repositories", func(t *testing.T) {
+func Test_persistents_Init(t *testing.T) {
+	t.Run("If no error, it will return the persistents", func(t *testing.T) {
 		ctrl := gomock.NewController(t)
 		defer ctrl.Finish()
 
