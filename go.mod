@@ -8,7 +8,12 @@ require (
 	github.com/pkg/errors v0.9.1
 )
 
-require github.com/google/go-cmp v0.6.0 // indirect
+require (
+	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
+	github.com/google/go-cmp v0.6.0 // indirect
+	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/xrash/smetrics v0.0.0-20240312152122-5f08fbb34913 // indirect
+)
 
 require (
 	github.com/bytedance/sonic v1.11.8 // indirect
@@ -39,6 +44,7 @@ require (
 	github.com/uptrace/bun v1.2.1
 	github.com/uptrace/bun/dialect/pgdialect v1.2.1
 	github.com/uptrace/bun/driver/pgdriver v1.2.1
+	github.com/urfave/cli/v2 v2.27.2
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	golang.org/x/arch v0.8.0 // indirect
