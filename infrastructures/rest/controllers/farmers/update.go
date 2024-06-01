@@ -44,7 +44,8 @@ func (c Controllers) Update(gc *gin.Context) {
 		return
 	}
 
-	gc.JSON(http.StatusOK, nil)
+	gc.Status(http.StatusOK)
+	gc.Writer.WriteHeaderNow()
 }
 
 func (c Controllers) buildErrorUpdate(gc *gin.Context, err error) {

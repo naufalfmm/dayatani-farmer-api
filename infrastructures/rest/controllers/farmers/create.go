@@ -47,5 +47,6 @@ func (c Controllers) Create(gc *gin.Context) {
 		return
 	}
 
-	gc.JSON(http.StatusCreated, nil)
+	gc.Status(http.StatusCreated)
+	gc.Writer.WriteHeaderNow()
 }

@@ -49,5 +49,6 @@ func (c Controllers) DeleteByID(gc *gin.Context) {
 		return
 	}
 
-	gc.JSON(http.StatusOK, nil)
+	gc.Status(http.StatusOK)
+	gc.Writer.WriteHeaderNow()
 }

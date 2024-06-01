@@ -12,4 +12,7 @@ const (
 
 	OrdAsc  = "ASC"
 	OrdDesc = "DESC"
+
+	ContentTypeHeader          = "Content-Type"
+	ApplicationJsonContentType = "application/json"
 )
