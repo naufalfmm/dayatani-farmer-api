@@ -103,7 +103,7 @@ func (app App) Run() {
 		Handler: app.ge,
 	}
 
-	go httpServer.ListenAndServe()
+	go httpServer.ListenAndServe() //nolint:errcheck
 
 	sc := make(chan os.Signal, 1)
 	signal.Notify(

@@ -38,7 +38,7 @@ func (m middlewares) PanicRecover() gin.HandlerFunc {
 			}
 
 			if isBrokenPipe {
-				gc.Error(r.(error))
+				gc.Error(r.(error)) //nolint:errcheck
 				gc.Abort()
 				return
 			}

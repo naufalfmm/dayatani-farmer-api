@@ -17,9 +17,9 @@ func (t *Trx) Begin(ctx context.Context, o orm.Orm) {
 }
 
 func (t *Trx) Commit() {
-	t.trx.Commit()
+	t.trx.Commit() //nolint:errcheck
 }
 
 func (t *Trx) Rollback() {
-	t.trx.Rollback()
+	t.trx.Rollback() //nolint:errcheck
 }

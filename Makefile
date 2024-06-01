@@ -6,31 +6,33 @@ SQLPATH=
 ENVFILENAME?=.env
 VERSION=
 PORT=
+TEST_RUNNING?=false
+LINT_RUNNING?=false
 
 db_migrate:
 ifeq ($(DOCKER), true)
-	docker run --name cryptocurrency-price-api-migration -v $(SQLPATH):/usr/src/migrations/sql -v $(DBPATH)/$(DBFILENAME):/usr/src/$(DBFILENAME) --env-file $(ENVFILENAME) --rm naufalfmm/cryptocurrency-price-api-migration ./migrations/cryptocurrency-price-api-migration migrate
+	docker run --name dayatani-farmer-api-migration -v $(SQLPATH):/usr/src/migrations/sql --env-file $(ENVFILENAME) --rm naufalfmm/dayatani-farmer-api-migration ./migrations/dayatani-farmer-api-migration migrate
 else
 	go run ./migrations/main.go migrate
 endif
 
 db_rollback:
 ifeq ($(DOCKER), true)
-	docker run --name cryptocurrency-price-api-migration -v $(SQLPATH):/usr/src/migrations/sql -v $(DBPATH)/$(DBFILENAME):/usr/src/$(DBFILENAME) --env-file $(ENVFILENAME) --rm naufalfmm/cryptocurrency-price-api-migration ./migrations/cryptocurrency-price-api-migration rollback $(if $(strip $(VERSION)), --version $(VERSION))
+	docker run --name dayatani-farmer-api-migration -v $(SQLPATH):/usr/src/migrations/sql --env-file $(ENVFILENAME) --rm naufalfmm/dayatani-farmer-api-migration ./migrations/dayatani-farmer-api-migration rollback $(if $(strip $(VERSION)), --version $(VERSION))
 else
 	go run ./migrations/main.go rollback $(if $(strip $(VERSION)), --version $(VERSION))
 endif
 
 db_create:
 ifeq ($(DOCKER), true)
-	docker run --name cryptocurrency-price-api-migration -v $(SQLPATH):/usr/src/migrations/sql --env-file $(ENVFILENAME) --rm naufalfmm/cryptocurrency-price-api-migration ./migrations/cryptocurrency-price-api-migration create --name $(NAME)
+	docker run --name dayatani-farmer-api-migration -v $(SQLPATH):/usr/src/migrations/sql --env-file $(ENVFILENAME) --rm naufalfmm/dayatani-farmer-api-migration ./migrations/dayatani-farmer-api-migration create --name $(NAME)
 else
 	go run ./migrations/main.go create --name $(NAME)
 endif
 
 db_init:
 ifeq ($(DOCKER), true)
-	docker build -t naufalfmm/cryptocurrency-price-api-migration:latest -f .\dockerfile\Dockerfile.migration .
+	docker build -t naufalfmm/dayatani-farmer-api-migration:latest -f .\dockerfile\Dockerfile.migration .
 endif
 
 db:
@@ -38,12 +40,12 @@ db:
 
 app_init:
 ifeq ($(DOCKER), true)
-	docker build -t naufalfmm/cryptocurrency-price-api:latest -f .\dockerfile\Dockerfile.app .
+	docker build -t naufalfmm/dayatani-farmer-api:latest --build-arg TEST_RUNNING=$(TEST_RUNNING) --build-arg LINT_RUNNING=$(LINT_RUNNING) -f .\dockerfile\Dockerfile.app .
 endif
 
 app_run:
 ifeq ($(DOCKER), true)
-	docker run --name cryptocurrency-price-api -p $(PORT):$(PORT) -v $(DBPATH)/$(DBFILENAME):/usr/src/$(DBFILENAME) --env-file $(ENVFILENAME) --rm naufalfmm/cryptocurrency-price-api
+	docker run --name dayatani-farmer-api -p $(PORT):$(PORT) --env-file $(ENVFILENAME) --rm naufalfmm/dayatani-farmer-api
 else
 	go run main.go
 endif

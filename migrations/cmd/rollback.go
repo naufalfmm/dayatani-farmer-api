@@ -85,8 +85,8 @@ func rollback(o orm.Orm) cli.ActionFunc {
 			return nil
 		}
 
-		o.Begin()
-		defer o.Rollback()
+		o.Begin() //nolint:errcheck
+		defer o.Rollback() //nolint:errcheck
 
 		log, err := rollbackVersion(ctx.Context, o)
 		if err != nil {
@@ -99,7 +99,7 @@ func rollback(o orm.Orm) cli.ActionFunc {
 			}
 		}
 
-		o.Commit()
+		o.Commit() //nolint:errcheck
 
 		return nil
 	}

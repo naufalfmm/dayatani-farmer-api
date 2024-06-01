@@ -89,7 +89,7 @@ func Test_repositories_UpdateByID(t *testing.T) {
 		}
 
 		now := time.Now()
-		frozenTime.Freeze(t, mock.ctx, now)
+		mock.ctx = frozenTime.Freeze(t, mock.ctx, now)
 
 		mock.orm.EXPECT().NewUpdate().Return(mock.ormUpdate)
 		mock.ormUpdate.EXPECT().Model(((*dao.Farmer)(nil))).Return(mock.ormUpdate)

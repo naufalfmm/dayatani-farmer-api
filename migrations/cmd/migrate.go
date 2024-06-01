@@ -29,7 +29,7 @@ func migrate(o orm.Orm) cli.ActionFunc {
 		}
 
 		o, _ = o.Begin()
-		defer o.Rollback()
+		defer o.Rollback() //nolint:errcheck
 
 		err := filepath.Walk(getSQLPath(), func(p string, info fs.FileInfo, _ error) error {
 			_, file := filepath.Split(p)
@@ -84,7 +84,7 @@ func migrate(o orm.Orm) cli.ActionFunc {
 			return err
 		}
 
-		o.Commit()
+		o.Commit() //nolint:errcheck
 
 		return nil
 	}
