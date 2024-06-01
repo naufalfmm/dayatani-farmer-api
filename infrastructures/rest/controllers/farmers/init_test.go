@@ -84,11 +84,9 @@ func (m mock) SetRequestBody(body interface{}) {
 	requestByte, _ := json.Marshal(body)
 
 	req := httptest.NewRequest(http.MethodGet, "/", strings.NewReader(string(requestByte)))
+	req.Header.Set(consts.ContentTypeHeader, consts.ApplicationJsonContentType)
 
 	m.gc.Request = req
-	m.gc.Request.Header.Set(consts.ContentTypeHeader, consts.ApplicationJsonContentType)
-
-	m.ctx = req.Context()
 }
 
 func (m mock) SetParam(key, val string) {
