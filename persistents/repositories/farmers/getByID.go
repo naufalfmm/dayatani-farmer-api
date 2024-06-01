@@ -13,7 +13,7 @@ func (r repositories) GetByID(ctx context.Context, id uint64) (dao.Farmer, error
 		Model(&farmer).
 		Where("id = ?", id).
 		Scan(ctx); err != nil {
-		r.log.Error(ctx, "get-farmer-by-id").Err(err).Uint64("id", id).Send()
+		r.log.Error(ctx, LogMsgGetFarmerByID).Err(err).Uint64(LogKeyID, id).Send()
 		return dao.Farmer{}, err
 	}
 

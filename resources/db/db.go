@@ -7,7 +7,7 @@ import (
 )
 
 type DB struct {
-	o   orm.Orm
+	O   orm.Orm
 	trx *Trx
 }
 
@@ -16,7 +16,7 @@ func (db *DB) StartTrx(ctx context.Context) {
 		db.trx = &Trx{}
 	}
 
-	db.trx.Begin(ctx, db.o)
+	db.trx.Begin(ctx, db.O)
 }
 
 func (db *DB) CommitTrx(ctx context.Context) {
@@ -39,7 +39,7 @@ func (db *DB) RollbackTrx(ctx context.Context) {
 
 func (db *DB) GetDB() orm.Orm {
 	if db.trx == nil {
-		return db.o
+		return db.O
 	}
 
 	return db.trx.trx

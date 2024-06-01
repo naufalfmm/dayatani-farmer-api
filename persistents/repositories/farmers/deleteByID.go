@@ -12,7 +12,7 @@ func (r repositories) DeleteByID(ctx context.Context, id uint64) error {
 		Model((*dao.Farmer)(nil)).
 		Where("id = ?", id).
 		Exec(ctx); err != nil {
-		r.log.Error(ctx, "delete-farmer-by-id").Err(err).Uint64("id", id).Send()
+		r.log.Error(ctx, LogMsgDeleteFarmerByID).Err(err).Uint64(LogKeyID, id).Send()
 		return err
 	}
 

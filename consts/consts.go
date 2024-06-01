@@ -9,4 +9,7 @@ const (
 	MaxLimit = 25
 
 	KeyReq = "req"
+
+	OrdAsc  = "ASC"
+	OrdDesc = "DESC"
 )

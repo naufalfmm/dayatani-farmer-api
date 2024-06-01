@@ -12,7 +12,7 @@ func (r repositories) Create(ctx context.Context, farmer dao.Farmer) (dao.Farmer
 		Model(&farmer).
 		Returning("*").
 		Exec(ctx); err != nil {
-		r.log.Error(ctx, "create-farmer").Err(err).Any("farmer", farmer).Send()
+		r.log.Error(ctx, LogMsgCreateFarmer).Err(err).Any(LogKeyFarmer, farmer).Send()
 		return dao.Farmer{}, err
 	}
 

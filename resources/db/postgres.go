@@ -28,6 +28,6 @@ func NewPostgres(c *config.EnvConfig, log logger.Logger) (*DB, error) {
 	}
 
 	return &DB{
-		o: o,
+		O: o,
 	}, nil
 }

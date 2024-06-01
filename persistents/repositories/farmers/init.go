@@ -9,6 +9,18 @@ import (
 	"github.com/naufalfmm/dayatani-farmer-api/utils/logger"
 )
 
+const (
+	LogMsgCreateFarmer        = "create-farmer"
+	LogMsgGetFarmerByID       = "get-farmer-by-id"
+	LogMsgDeleteFarmerByID    = "delete-farmer-by-id"
+	LogMsgGetPaginatedFarmers = "get-paginated-farmers"
+
+	LogKeyFarmer = "farmer"
+	LogKeyID     = "id"
+
+	ColumnFarmerName = "farmer.name"
+)
+
 //go:generate mockgen -package=farmers -destination=../../../mocks/persistents/repositories/farmers/init.go -source=init.go
 type (
 	Repositories interface {

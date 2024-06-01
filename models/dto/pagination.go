@@ -30,10 +30,10 @@ func (req *PaginationRequest) FromGinContext(gc *gin.Context) {
 
 func (req *PaginationRequest) Paginate(selOrm orm.Select, mapSort map[string]func(ordKeyword string) string) orm.Select {
 	for _, sort := range req.Sorts {
-		ordKeyword := "ASC"
+		ordKeyword := consts.OrdAsc
 		if sort[0] == '-' {
 			sort = sort[1:]
-			ordKeyword = "DESC"
+			ordKeyword = consts.OrdDesc
 		}
 
 		if _, ok := mapSort[sort]; !ok {

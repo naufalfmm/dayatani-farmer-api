@@ -12,7 +12,7 @@ import (
 func (r repositories) GetPaginated(ctx context.Context, req dto.FarmerListPaginationRequest) (dao.FarmerPaging, error) {
 	mapSort := map[string]func(ordKeyword string) string{
 		"name": func(ordKeyword string) string {
-			return fmt.Sprintf("%s %s", "farmer.name", ordKeyword)
+			return fmt.Sprintf("%s %s", ColumnFarmerName, ordKeyword)
 		},
 	}
 
@@ -21,7 +21,7 @@ func (r repositories) GetPaginated(ctx context.Context, req dto.FarmerListPagina
 
 	count, err := selOrm.ScanAndCount(ctx)
 	if err != nil {
-		r.log.Error(ctx, "get-paginated-farmers").Err(err).Any(consts.KeyReq, req).Send()
+		r.log.Error(ctx, LogMsgGetPaginatedFarmers).Err(err).Any(consts.KeyReq, req).Send()
 		return dao.FarmerPaging{}, err
 	}
 
