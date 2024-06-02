@@ -13,6 +13,8 @@ type EnvConfig struct {
 	Name string `envconfig:"NAME" default:"Dayatani Farmer API" required:"true"`
 	Port int    `envconfig:"PORT" default:"8080" required:"true"`
 
+	ReleaseMode bool `envconfig:"RELEASE_MODE" default:"true"`
+
 	DbHost     string `envconfig:"DB_HOST" required:"true"`
 	DbPort     string `envconfig:"DB_PORT" required:"true"`
 	DbUsername string `envconfig:"DB_USERNAME" required:"true"`

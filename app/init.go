@@ -34,12 +34,16 @@ type App struct {
 }
 
 func Init() App {
-	ge := gin.New()
-
 	c, err := config.NewConfig()
 	if err != nil {
 		panic(err)
 	}
+
+	if c.ReleaseMode {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
+	ge := gin.New()
 
 	l, err := log.NewLogger(c)
 	if err != nil {

@@ -15,6 +15,8 @@ Service of farmer
     NAME="Dayatani Farmer API" # The service name. The default value is Dayatani Farmer API. The value is required.
     PORT=PORT # The service running port. The default value is 8080
 
+    RELEASE_MODE=RELEASE_MODE # The release mode of the service. The value is true or false. The default value is true. If true, the service run in release mode.
+
     DB_HOST=DB_HOST # The host of PostgreSQL database. The value is required
     DB_PORT=DB_PORT # The port of PostgreSQL database. The value is required
     DB_USERNAME=DB_USERNAME # The auth username of the PosgreSQL database. The value is required
